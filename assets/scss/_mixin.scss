@@ -1,0 +1,36 @@
+@import "./variables";
+
+//flex
+@mixin flex($flex, $order, $flex-grow) {
+    flex: $flex;
+    order: $order;
+    flex-grow: $flex-grow;
+}
+
+@mixin flex-row{
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+//max-width
+@mixin max-width{
+    max-width: 1440px;
+    width: 100vw;
+}
+
+@mixin max-width-header{
+    max-width: 1440px;
+    width: 100vw;
+    padding: 12px 10px;
+}
+
+//bg
+@mixin bg($name, $path: "../../images/", $format: "png") {
+    background-image: url("#{$path}#{$name}.#{$format}");
+}
+
