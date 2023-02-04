@@ -325,6 +325,7 @@ i {
   display: flex;
   flex-direction: row;
   width: 100vw;
+  max-width: 100%;
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -381,6 +382,7 @@ section {
   display: flex;
   flex-direction: row;
   width: 100vw;
+  max-width: 100%;
   justify-content: center;
   min-height: 100vh;
   background-color: #fff;
@@ -444,6 +446,7 @@ section.about {
   display: flex;
   flex-direction: row;
   width: 100vw;
+  max-width: 100%;
   align-items: center;
   justify-content: center;
   gap: 10px;

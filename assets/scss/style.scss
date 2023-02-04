@@ -29,7 +29,7 @@ a {
 
 i { font-size: 26px; }
 
-.header { @include flex-row; width: 100vw; align-items: center; justify-content: center; gap: 10px; height: 56px; position: fixed; top: 0; flex: none; order: 0; align-self: stretch; flex-grow: 0; z-index: 1000;
+.header { @include flex-row; width: 100vw; max-width: 100%; align-items: center; justify-content: center; gap: 10px; height: 56px; position: fixed; top: 0; flex: none; order: 0; align-self: stretch; flex-grow: 0; z-index: 1000;
     & .logo{
         & img{
             height: 30px;
@@ -50,6 +50,7 @@ section {
     position: relative;
     @include flex-row();
     width: 100vw;
+    max-width: 100%;
     justify-content: center; 
     min-height: 100vh;
     background-color: #fff;
@@ -110,6 +111,7 @@ section {
 .footer{
     @include flex-row;
     width: 100vw;
+    max-width: 100%;
     align-items: center; 
     justify-content: center; 
     gap: 10px;
