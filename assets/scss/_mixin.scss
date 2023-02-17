@@ -20,13 +20,18 @@
 //max-width
 @mixin max-width{
     max-width: 1200px;
-    width: 100vw;
+    width: 100%;
 }
 
 @mixin max-width-header{
     max-width: 1200px;
-    width: 100vw;
-    padding: 12px 10px;
+    width: 100%;
+}
+
+@mixin max-width-footer{
+    max-width: 1200px;
+    width: 100%;
+    padding: 24px 0px;
 }
 
 //bg

@@ -1,17 +1,3 @@
-// const content = "안녕하세요!\n'정세현'입니다!";
-// const text = document.querySelector(".text");
-// let i = 0;
-
-//function typing(){
-//    let txt = content[i++];
-//    text.innerHTML += txt=== "\n" ? "<br/>": txt;
-//    if (i > content.length) {
-//        text.textContent = "";
-//        i = 0;
-//    }
-//}
-//setInterval(typing, 300)
-
 //초성중성종성을 나누는 함수 
 String.prototype.toKorChars = function() { 
     var cCho = [ 'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ' ], 
@@ -122,3 +108,167 @@ function erase() {
 
 // Play draw animation once
 setTimeout(draw, 300)
+
+// modal window
+
+const modal = document.getElementById("modal");
+const btnModal = document.querySelectorAll(".imgs");
+const modalImage = document.getElementById("modalImg");
+const title = document.querySelector(".title h2");
+const body = document.querySelector("body");
+const modalwin = document.querySelector(".modal-window");
+
+window.onload = function() {
+    let bigPic = document.getElementById("modalImg");
+    let smallPics = document.querySelectorAll(".imgs");
+    let bigPicTitle = document.querySelector(".title h2");
+
+
+    for(let i = 0; i < smallPics.length; i++) {
+        smallPics[i].onclick = changepic;
+    }
+
+    function changepic() {
+        let smallPicsAttribute = this.getAttribute('src');
+        let smallPicsAttributealt = this.getAttribute('alt');
+        bigPic.setAttribute('src', smallPicsAttribute);
+        bigPicTitle.innerHTML = smallPicsAttributealt;
+    }
+}
+
+btnModal.forEach( (list) => {
+    list.addEventListener("click", e => {
+        modal.classList.remove('fadeOut');
+        modal.classList.add('fadeIn');
+        modal.style.display = "flex";
+        modal.classList.toggle("hidden");
+
+        if (!modal.classList.contains("hidden")) {
+            // Disable scroll
+            body.style.overflow = "hidden";
+        } else {
+            // Enable scroll
+            body.style.overflow = "auto";
+        }
+        modalwin.scrollTo( 0, 0 );
+    })
+});
+
+const closeBtn = modal.querySelector(".close-area")
+closeBtn.addEventListener("click", e => {
+    modal.classList.remove('fadeIn');
+    modal.classList.add('fadeOut');
+    setTimeout(function(){
+        modal.style.display = "none";
+    }, 500); 
+    modal.classList.toggle("hidden");
+    if (!modal.classList.contains("hidden")) {
+        // Disable scroll
+        body.style.overflow = "hidden";
+    } else {
+        // Enable scroll
+        body.style.overflow = "auto";
+    }
+})
+
+modal.addEventListener("click", e => {
+    const evTarget = e.target
+    if(evTarget.classList.contains("modal-overlay")) {
+        modal.classList.remove('fadeIn');
+        modal.classList.add('fadeOut');
+        modal.classList.toggle("hidden");
+        setTimeout(function(){
+            modal.style.display = "none";
+        }, 500);
+        if (!modal.classList.contains("hidden")) {
+            // Disable scroll
+            body.style.overflow = "hidden";
+        } else {
+            // Enable scroll
+            body.style.overflow = "auto";
+        }
+    };
+})
+
+window.addEventListener("keyup", e => {
+    if(modal.style.display === "flex" && e.key === "Escape") {
+        modal.classList.remove('fadeIn');
+        setTimeout(function(){
+            modal.style.display = "none";
+        }, 500);
+        modal.classList.add('fadeOut');
+        modal.classList.toggle("hidden");
+        if (!modal.classList.contains("hidden")) {
+            // Disable scroll
+            body.style.overflow = "hidden";
+        } else {
+            // Enable scroll
+            body.style.overflow = "auto";
+        }
+    }
+})
+
+document.addEventListener("DOMContentLoaded", function() {
+    var lazyloadImages;    
+  
+    if ("IntersectionObserver" in window) {
+      lazyloadImages = document.querySelectorAll(".lazy");
+      var imageObserver = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var image = entry.target;
+            image.src = image.dataset.src;
+            image.classList.remove("lazy");
+            image.classList.add("lazyOn");
+            imageObserver.unobserve(image);
+          }
+        });
+      });
+  
+      lazyloadImages.forEach(function(image) {
+        imageObserver.observe(image);
+      });
+    } else {  
+      var lazyloadThrottleTimeout;
+      lazyloadImages = document.querySelectorAll(".lazy");
+      
+      function lazyload () {
+        if(lazyloadThrottleTimeout) {
+          clearTimeout(lazyloadThrottleTimeout);
+        }    
+  
+        lazyloadThrottleTimeout = setTimeout(function() {
+          var scrollTop = window.pageYOffset;
+          lazyloadImages.forEach(function(img) {
+              if(img.offsetTop < (window.innerHeight + scrollTop)) {
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                img.classList.add('lazyOn');
+              }
+          });
+          if(lazyloadImages.length == 0) { 
+            document.removeEventListener("scroll", lazyload);
+            window.removeEventListener("resize", lazyload);
+            window.removeEventListener("orientationChange", lazyload);
+          }
+        }, 20);
+      }
+  
+      document.addEventListener("scroll", lazyload);
+      window.addEventListener("resize", lazyload);
+      window.addEventListener("orientationChange", lazyload);
+    }
+})
+
+window.scroll({
+    top: 0,
+    left: 100,
+    behavior: 'smooth'
+});
+
+const preload = (images) => () => {
+    images.forEach((image) => {
+        const img = new Image();
+        img.src = image;
+    });
+};
